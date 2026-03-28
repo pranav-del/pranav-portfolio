@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pranav Tripathi — Software Engineer (Backend, Java, Microservices). Pune, India." />
+  <title>Pranav Tripathi · Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-elevated: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-soft: rgba(88, 166, 255, 0.15);
+      --cyan: #00bcd4;
+      --glow: rgba(88, 166, 255, 0.35);
+      --radius: 12px;
+      --font: "JetBrains Mono", ui-monospace, monospace;
+      --nav-h: 64px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    section {
+      scroll-margin-top: calc(var(--nav-h) + 12px);
+    }
+
+    #hero {
+      scroll-margin-top: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 2.5rem);
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav__brand {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav__brand span {
+      color: var(--accent);
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav__links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav__links a:hover {
+      color: var(--text);
+      background: var(--bg-elevated);
+      text-decoration: none;
+    }
+
+    .nav__links a.is-active {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 2rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at center, rgba(88, 166, 255, 0.06) 0%, transparent 50%),
+        linear-gradient(rgba(48, 54, 61, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(48, 54, 61, 0.35) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px, 24px 24px;
+      background-position: center;
+      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 700;
+      margin: 0 0 1rem;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .hero__tagline {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: var(--text-muted);
+      margin: 0 0 1.25rem;
+      max-width: 36ch;
+    }
+
+    .hero__terminal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      min-height: 1.6em;
+    }
+
+    .hero__terminal::before {
+      content: ">";
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .hero__terminal .cursor {
+      display: inline-block;
+      width: 0.55em;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      vertical-align: -2px;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .hero__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.25rem;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: #0d1117;
+      border-color: var(--accent);
+    }
+
+    .btn--primary:hover {
+      box-shadow: 0 0 24px var(--glow);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .btn--ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem clamp(1rem, 4vw, 2.5rem);
+      border-top: 1px solid var(--border);
+    }
+
+    .section__title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .section__heading {
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      margin: 0 0 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Fade in */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Skills */
+    .skills__wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-elevated);
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .skills-group {
+      margin-bottom: 1.75rem;
+    }
+
+    .skills-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .skills-group__label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .summary__text {
+      max-width: 52rem;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .edu-card {
+      max-width: 520px;
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-elevated);
+    }
+
+    .edu-card__degree {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .edu-card__meta {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .coursework {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 48rem;
+      line-height: 1.7;
+    }
+
+    .subsection-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 2.5rem 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      max-width: 720px;
+      padding-left: 1.5rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.35rem;
+      bottom: 0.35rem;
+      width: 2px;
+      background: linear-gradient(var(--accent), var(--border));
+      border-radius: 2px;
+    }
+
+    .timeline__item {
+      position: relative;
+      padding-bottom: 2.5rem;
+      padding-left: 1.25rem;
+    }
+
+    .timeline__item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline__item::before {
+      content: "";
+      position: absolute;
+      left: -1.5rem;
+      top: 0.35rem;
+      width: 10px;
+      height: 10px;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      transform: translateX(-3px);
+    }
+
+    .timeline__role {
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .timeline__meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0 0 0.75rem;
+    }
+
+    .timeline__item ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .timeline__item li {
+      margin-bottom: 0.45rem;
+    }
+
+    /* Projects */
+    .projects {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--accent-soft), 0 0 32px var(--glow);
+      border-color: rgba(88, 166, 255, 0.45);
+    }
+
+    .project-card h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .project-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card__tags span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(88, 166, 255, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+    }
+
+    .project-card p {
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .project-card__why {
+      font-size: 0.82rem;
+      color: var(--cyan);
+      margin: 0 0 0.75rem;
+      font-style: italic;
+    }
+
+    .project-card ul {
+      margin: 0 0 1.25rem;
+      padding-left: 1.1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .project-card li {
+      margin-bottom: 0.35rem;
+    }
+
+    .diagram {
+      margin: 1rem 0 1.25rem;
+      padding: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    .diagram svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .btn--code {
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+    }
+
+    /* Certs */
+    .certs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: 520px;
+    }
+
+    .certs li {
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      background: var(--bg-elevated);
+      font-size: 0.9rem;
+    }
+
+    .certs li strong {
+      color: var(--text);
+    }
+
+    /* Contact */
+    .contact__links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .contact__links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+    }
+
+    footer {
+      padding: 2rem clamp(1rem, 4vw, 2.5rem);
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .nav__links {
+        gap: 0;
+      }
+
+      .nav__links a {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.72rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .timeline__item,
+      .project-card {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .hero__terminal .cursor {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__brand" href="#hero">PT<span>.</span></a>
+    <div class="nav__links">
+      <a href="#hero">Home</a>
+      <a href="#summary">Summary</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#certifications">Certs</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header id="hero" class="hero">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Software Engineer (Java Full Stack Developer, Microservices)</p>
+      <h1>Pranav Tripathi</h1>
+      <p class="hero__tagline">Pune, Maharashtra, India · I build the systems that don't break at 3AM.</p>
+      <p class="hero__terminal" aria-live="polite"><span id="type-text"></span><span class="cursor" aria-hidden="true"></span></p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projects">View Projects</a>
+        <a class="btn btn--ghost" href="resume.pdf" download="Pranav_Tripathi_Resume.pdf">Download Resume</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="summary" class="reveal">
+    <p class="section__title">Overview</p>
+    <h2 class="section__heading">Summary</h2>
+    <p class="summary__text">Backend Software Engineer with 2.9+ years of experience building scalable and fault-tolerant backend systems using Java, Spring Boot, and microservices. Strong experience in REST API design, production debugging, performance optimization, distributed systems fundamentals, and asynchronous messaging using Kafka. Proven ability to deliver high-quality backend features in enterprise environments.</p>
+  </section>
+
+  <section id="skills" class="reveal">
+    <p class="section__title">Stack</p>
+    <h2 class="section__heading">Skills</h2>
+    <div class="skills-group">
+      <p class="skills-group__label">Languages</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">C / C++</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Backend &amp; architecture</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Microservices</span>
+        <span class="skill-tag">Distributed systems</span>
+        <span class="skill-tag">System design</span>
+        <span class="skill-tag">Fault-tolerant services</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Databases</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">NoSQL</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Messaging / streaming</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">Kafka</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Tools / frameworks</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">Spring Boot</span>
+        <span class="skill-tag">React JS</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Cloud &amp; DevOps</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">AWS</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">CI/CD</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group__label">Developer tools</p>
+      <div class="skills__wrap">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Bitbucket</span>
+        <span class="skill-tag">IntelliJ IDEA</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Postman</span>
+        <span class="skill-tag">Jira</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="reveal">
+    <p class="section__title">Career</p>
+    <h2 class="section__heading">Experience</h2>
+    <div class="timeline">
+      <article class="timeline__item reveal">
+        <h3 class="timeline__role">Amdocs — Software Engineer (SDE-2)</h3>
+        <p class="timeline__meta">July 2025 – Present · Pune, India</p>
+        <ul>
+          <li>Contributed to planning scalable microservices for high-throughput billing and CPQ systems by defining service boundaries, API contracts, and multi-service data flows.</li>
+          <li>Built and optimized low-latency RESTful APIs with validation, exception handling, and idempotency, improving API response time by 25–30% and system reliability.</li>
+          <li>Took part in system design discussions and architecture reviews focusing on scalability, fault tolerance, and distributed system best practices.</li>
+          <li>Led code reviews and mentored junior engineers, improving onboarding efficiency and strengthening engineering standards across the team.</li>
+          <li>Owned end-to-end delivery of critical backend features used by enterprise telecom clients handling thousands of daily transactions.</li>
+        </ul>
+      </article>
+      <article class="timeline__item reveal">
+        <h3 class="timeline__role">Amdocs — Software Engineer (SDE-1)</h3>
+        <p class="timeline__meta">July 2023 – June 2025 · Pune, India</p>
+        <ul>
+          <li>Developed and delivered a Proposal-Clone feature using REST APIs, enhancing database schemas, and building React UI components, reducing user setup time by 50%.</li>
+          <li>Created and maintained RESTful APIs and microservices supporting high-traffic enterprise backend platforms.</li>
+          <li>Integrated legacy billing platforms with modern microservices using asynchronous REST communication, improving automation and system stability.</li>
+          <li>Refined inter-service orchestration and database interactions, improving end-to-end response time by 30%.</li>
+          <li>Wrote automated unit and integration tests using JUnit, increasing backend test coverage to 90% and reducing critical production defects by 35%.</li>
+          <li>Analyzed and resolved complex production issues across distributed services, improving system stability and reducing recurring incidents.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <p class="section__title">Work</p>
+    <h2 class="section__heading">Projects</h2>
+    <div class="projects">
+      <article class="project-card reveal">
+        <h3>Order &amp; Payment Microservices Platform</h3>
+        <div class="project-card__tags">
+          <span>Java</span><span>Spring Boot</span><span>Spring Cloud</span><span>Eureka</span><span>API Gateway</span><span>H2</span>
+        </div>
+        <p>Microservices-based order and payment system using Spring Boot, REST APIs, and isolated data stores — with Eureka, API Gateway, and reliable request processing.</p>
+        <div class="diagram" role="img" aria-label="Architecture: Client to API Gateway to Order and Payment services and H2 database">
+          <svg viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg" width="520" height="200">
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6 Z" fill="#58a6ff" />
+              </marker>
+            </defs>
+            <rect x="20" y="70" width="88" height="44" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+            <text x="64" y="97" text-anchor="middle" fill="#e6edf3" font-size="11" font-family="JetBrains Mono, monospace">Client</text>
+            <line x1="108" y1="92" x2="148" y2="92" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <rect x="150" y="60" width="120" height="64" rx="6" fill="#161b22" stroke="#00bcd4" stroke-width="1.5"/>
+            <text x="210" y="88" text-anchor="middle" fill="#00bcd4" font-size="11" font-family="JetBrains Mono, monospace">API Gateway</text>
+            <text x="210" y="108" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono, monospace">routing</text>
+            <line x1="270" y1="80" x2="318" y2="52" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <line x1="270" y1="104" x2="318" y2="132" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <rect x="320" y="28" width="100" height="44" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+            <text x="370" y="55" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono, monospace">Order</text>
+            <text x="370" y="68" text-anchor="middle" fill="#8b949e" font-size="8" font-family="JetBrains Mono, monospace">Service</text>
+            <rect x="320" y="128" width="100" height="44" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+            <text x="370" y="155" text-anchor="middle" fill="#e6edf3" font-size="10" font-family="JetBrains Mono, monospace">Payment</text>
+            <text x="370" y="168" text-anchor="middle" fill="#8b949e" font-size="8" font-family="JetBrains Mono, monospace">Service</text>
+            <line x1="370" y1="72" x2="370" y2="118" stroke="#30363d" stroke-width="1" stroke-dasharray="4 3"/>
+            <line x1="420" y1="50" x2="448" y2="50" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <line x1="420" y1="150" x2="448" y2="150" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <rect x="450" y="32" width="52" height="140" rx="6" fill="#0d1117" stroke="#8b949e" stroke-width="1.5"/>
+            <text x="476" y="105" text-anchor="middle" fill="#8b949e" font-size="10" font-family="JetBrains Mono, monospace">H2</text>
+            <text x="476" y="120" text-anchor="middle" fill="#8b949e" font-size="9" font-family="JetBrains Mono, monospace">DB</text>
+          </svg>
+        </div>
+        <p class="project-card__why">Portfolio project aligned with production microservices patterns from my work at Amdocs.</p>
+        <p><strong style="color: var(--text); font-size: 0.85rem;">Highlights</strong></p>
+        <ul>
+          <li>Built a microservices-based order and payment system using Spring Boot, REST APIs, and isolated data stores.</li>
+          <li>Applied Eureka-based service discovery and API Gateway routing for scalable, fault-tolerant inter-service communication.</li>
+          <li>Added centralized exception handling, validation, and integration tests for reliable processing and data consistency.</li>
+        </ul>
+        <a class="btn btn--ghost btn--code" href="https://github.com/pranav-tripathi" target="_blank" rel="noopener noreferrer">View Code</a>
+      </article>
+
+      <article class="project-card reveal">
+        <h3>Real-Time Billing Event Processor</h3>
+        <div class="project-card__tags">
+          <span>Java</span><span>Spring Boot</span><span>Kafka</span><span>MySQL</span>
+        </div>
+        <p>Simulates a telecom-style billing pipeline: services publish usage and charge events to Kafka topics; a consumer processes them, persists aggregates to MySQL, and REST APIs expose usage and invoice views.</p>
+        <p class="project-card__why">At Amdocs I worked on billing systems — I built a side project to simulate how billing events flow through Kafka into a processing service.</p>
+        <p><strong style="color: var(--text); font-size: 0.85rem;">Key features</strong></p>
+        <ul>
+          <li>Producers and topics modeled for billing-relevant events</li>
+          <li>Idempotent consumer processing with MySQL as source of truth</li>
+          <li>Query APIs for operational visibility into processed usage</li>
+        </ul>
+        <a class="btn btn--ghost btn--code" href="https://github.com/pranav-tripathi" target="_blank" rel="noopener noreferrer">View Code</a>
+      </article>
+
+      <article class="project-card reveal">
+        <h3>API Gateway + Rate Limiter (from scratch)</h3>
+        <div class="project-card__tags">
+          <span>Java</span><span>Spring Boot</span><span>Redis</span><span>REST</span>
+        </div>
+        <p>Custom API gateway that routes requests to downstream services and enforces per-client rate limits using a token bucket algorithm (Redis as the conceptual backing store for distributed counters).</p>
+        <p class="project-card__why">I wanted to understand how API gateways work internally, so I built one — it routes requests and enforces rate limits per API key.</p>
+        <p><strong style="color: var(--text); font-size: 0.85rem;">Key features</strong></p>
+        <ul>
+          <li>Configurable routes and forwarding to backend endpoints</li>
+          <li>Per API key token bucket with predictable 429 responses</li>
+          <li>Clean separation between routing, limiting, and downstream calls</li>
+        </ul>
+        <a class="btn btn--ghost btn--code" href="https://github.com/pranav-tripathi" target="_blank" rel="noopener noreferrer">View Code</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="education" class="reveal">
+    <p class="section__title">Academics</p>
+    <h2 class="section__heading">Education</h2>
+    <div class="edu-card">
+      <p class="edu-card__degree">Bachelor of Technology — Computer Science</p>
+      <p class="edu-card__meta">VIT Vellore · GPA: 8.20 / 10</p>
+    </div>
+    <h3 class="subsection-heading">Coursework</h3>
+    <p class="coursework">Data Structures, Object-Oriented Programming, Operating Systems, Database Management Systems</p>
+  </section>
+
+  <section id="certifications" class="reveal">
+    <p class="section__title">Credentials</p>
+    <h2 class="section__heading">Certifications</h2>
+    <ul class="certs">
+      <li><strong>AWS Certified Cloud Practitioner</strong> — 2024</li>
+      <li><strong>Java and Spring Framework</strong> — Udemy</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="reveal">
+    <p class="section__title">Hello</p>
+    <h2 class="section__heading">Contact</h2>
+    <div class="contact__links">
+      <a href="mailto:pranavtripathi2001@gmail.com">pranavtripathi2001@gmail.com</a>
+      <a href="tel:+916387429309">+91-6387429309</a>
+      <a href="https://www.linkedin.com/in/pranav-tripathi-3582521b3" target="_blank" rel="noopener noreferrer">linkedin.com/in/pranav-tripathi-3582521b3</a>
+      <a href="https://github.com/pranav-tripathi" target="_blank" rel="noopener noreferrer">github.com/pranav-tripathi</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Pranav Tripathi · Pune, Maharashtra, India</p>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      /* Typing animation */
+      var phrases = [
+        "Building systems that scale...",
+        "Shipping reliable APIs...",
+        "Owning the backend, end to end."
+      ];
+      var el = document.getElementById("type-text");
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduceMotion) {
+        el.textContent = phrases[0];
+      } else {
+        var phraseIndex = 0;
+        var charIndex = 0;
+        var deleting = false;
+        var pauseMs = 0;
+
+        function tick() {
+          var phrase = phrases[phraseIndex];
+          if (pauseMs > 0) {
+            pauseMs -= 50;
+            setTimeout(tick, 50);
+            return;
+          }
+          if (!deleting) {
+            charIndex++;
+            el.textContent = phrase.slice(0, charIndex);
+            if (charIndex === phrase.length) {
+              pauseMs = 1800;
+              deleting = true;
+            }
+          } else {
+            charIndex--;
+            el.textContent = phrase.slice(0, charIndex);
+            if (charIndex === 0) {
+              deleting = false;
+              phraseIndex = (phraseIndex + 1) % phrases.length;
+              pauseMs = 400;
+            }
+          }
+          var delay = deleting && charIndex > 0 ? 32 : !deleting ? 45 : 32;
+          setTimeout(tick, delay);
+        }
+        setTimeout(tick, 600);
+      }
+
+      /* Scroll reveal */
+      var revealEls = document.querySelectorAll(".reveal, .timeline__item, .project-card");
+      var revealObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+      );
+      revealEls.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+
+      /* Active nav on scroll */
+      var sections = document.querySelectorAll("section, #hero");
+      var navLinks = document.querySelectorAll(".nav__links a");
+
+      function getActiveSection() {
+        var y = window.scrollY + 96;
+        var current = "hero";
+        sections.forEach(function (sec) {
+          var top = sec.offsetTop;
+          var id = sec.id || "hero";
+          if (y >= top - 120) {
+            current = id;
+          }
+        });
+        return current;
+      }
+
+      function updateNav() {
+        var active = getActiveSection();
+        navLinks.forEach(function (a) {
+          var href = a.getAttribute("href");
+          var id = href && href.charAt(0) === "#" ? href.slice(1) : "";
+          a.classList.toggle("is-active", id === active);
+        });
+      }
+
+      var ticking = false;
+      window.addEventListener("scroll", function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            updateNav();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+      updateNav();
+    })();
+  </script>
+</body>
+</html>
